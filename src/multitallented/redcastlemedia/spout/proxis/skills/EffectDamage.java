@@ -15,6 +15,7 @@ import org.spout.vanilla.source.DamageCause;
  */
 public class EffectDamage extends EffectSource implements ActiveEffect{
 	public static final ConfigurationHolder DAMAGE = new ConfigurationHolder(10, "EffectDamage", "damage");
+	public static final ConfigurationHolder DAMAGE_LEVEL = new ConfigurationHolder(0, "EffectDamage", "damage-level");
 	public static final String NAME = "EffectDamage";
 
 	public EffectDamage() {
@@ -34,7 +35,7 @@ public class EffectDamage extends EffectSource implements ActiveEffect{
 	public void execute(String skillName, User user, Entity target){
 		Player player = getPlugin().getEngine().getPlayer(user.getName(), false);
 		try{
-			target.get(HealthComponent.class).damage(DAMAGE.getInt(), DamageCause.COMMAND, player, true);
+			target.get(HealthComponent.class).damage(DAMAGE.getInt() + (DAMAGE_LEVEL.getInt()/* * user.getLevel() */), DamageCause.COMMAND, player, true);
 		}catch (Exception e){
 			
 		}
